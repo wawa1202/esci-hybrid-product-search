@@ -1,0 +1,49 @@
+{
+  "feature_names": [
+    "bm25_score",
+    "dense_score",
+    "query_length",
+    "title_length",
+    "overlap_count",
+    "overlap_ratio",
+    "brand_match",
+    "color_match",
+    "bullet_length",
+    "bullet_overlap_count",
+    "bullet_overlap_ratio"
+  ],
+  "drop_features": [],
+  "runtime_signature": {
+    "pipeline_version": "search-v1",
+    "tokenizer_version": "casefold-before-filter-v2",
+    "locale": "us",
+    "text": {
+      "version": "title-brand-bullet-v1",
+      "max_tokens": 128
+    },
+    "bm25": {
+      "k1": 1.2,
+      "b": 0.75,
+      "top_k": 100
+    },
+    "embedding": {
+      "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+      "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+      "max_seq_length": 128,
+      "normalize_embeddings": true
+    },
+    "retrieval": {
+      "vector_block_size": 8192,
+      "dense_top_k": 100,
+      "rrf_constant": 60,
+      "rerank_top_k": 100
+    }
+  },
+  "dataset_id": "dev-c882caf5632ad442",
+  "best_iteration": 80,
+  "model_sha256": "ce5cb3755a3c452b2c64cb5c49ca47befbbb9c63f0c7c0472ba50143b81e2be9",
+  "train_groups": 200,
+  "train_rows": 3886,
+  "valid_groups": 200,
+  "valid_rows": 3983
+}

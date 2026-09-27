@@ -1,0 +1,139 @@
+# =========================
+# Python 缓存和临时文件
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Python 构建产物
+# =========================
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# =========================
+# 虚拟环境
+# =========================
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+# 环境变量和密钥
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# 编辑器和操作系统文件
+# =========================
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# =========================
+# 原始数据
+# 原始 Parquet 不提交
+# manifest 允许提交，便于追踪来源和 SHA256
+# =========================
+data/raw/*
+!data/raw/*.manifest.json
+!data/raw/.gitkeep
+
+# =========================
+# 处理后的数据库和临时数据集
+# =========================
+data/processed/*
+!data/processed/.gitkeep
+
+# =========================
+# 模型、索引和向量产物
+# =========================
+artifacts/*
+!artifacts/.gitkeep
+
+*.npy
+*.npz
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+*.index
+*.faiss
+
+# =========================
+# SQLite 和本地数据库
+# =========================
+*.sqlite
+*.sqlite3
+*.db
+*.db-wal
+*.db-shm
+
+# =========================
+# 实验运行产物
+# 只保留最终报告，临时 run 目录不提交
+# =========================
+reports/*
+!reports/.gitkeep
+!reports/final/
+!reports/final/**
+
+# =========================
+# 本地日志
+# =========================
+logs/
+*.log
+
+# =========================
+# 模型和数据缓存
+# =========================
+.cache/
+.backups/
+cache/
+hf_cache/
+model_cache/
+
+# =========================
+# 临时文件
+# =========================
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+~*
+
+# Public reproducibility snapshot
+# The GitHub copy intentionally includes the small dev dataset, prebuilt releases,
+# and validation reports so the documented demo works after dependency setup.
+!data/processed/dev-c882caf5632ad442/
+!data/processed/dev-c882caf5632ad442/**
+!artifacts/dev-indexes-20260926/
+!artifacts/dev-indexes-20260926/**
+!artifacts/dev-ltr-20260926/
+!artifacts/dev-ltr-20260926/**
+!reports/validation-20260926/
+!reports/validation-20260926/**
+!reports/benchmark-20260926.json
+!reports/audit-20260926T052441106378Z/
+!reports/audit-20260926T052441106378Z/**
+!reports/audit-20260926T055548368947Z/
+!reports/audit-20260926T055548368947Z/**
+!reports/audit-20260926T060337109128Z/
+!reports/audit-20260926T060337109128Z/**

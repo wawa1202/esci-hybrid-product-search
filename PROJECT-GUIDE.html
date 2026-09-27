@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>商品搜索与排序系统｜学习总览</title>
+<style>
+:root{--bg:#f6f7fb;--panel:#fff;--ink:#182230;--muted:#637083;--line:#dfe4ec;--blue:#2457d6;--soft:#edf2ff;--code:#111827}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);min-height:100vh}.side{position:sticky;top:0;height:100vh;overflow:auto;background:#101827;color:#e8edf6;padding:24px 18px}.side h1{font-size:20px;line-height:1.35;margin:0 0 8px}.side p{color:#aeb9ca;font-size:13px;margin:0 0 18px}.side input{width:100%;padding:9px 10px;border:1px solid #36445a;border-radius:8px;background:#1a2638;color:#fff}.side nav{margin-top:18px}.side a{display:block;color:#bfcaDA;text-decoration:none;padding:7px 9px;border-radius:6px;font-size:14px}.side a:hover,.side a.active{background:#243a6b;color:#fff}.main{max-width:1120px;width:100%;padding:42px 54px 90px;margin:auto}.hero{background:linear-gradient(135deg,#17336f,#2e63d8);color:white;padding:34px 38px;border-radius:16px;box-shadow:0 8px 30px #1b3d801f}.hero h2{margin:0 0 6px;font-size:30px}.hero p{margin:0;color:#dce7ff}.section{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 30px;margin-top:24px}.section h2{margin:0 0 14px;font-size:23px;border-bottom:1px solid var(--line);padding-bottom:10px}.section h3{margin:24px 0 8px;font-size:18px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.card{border:1px solid var(--line);border-radius:9px;padding:13px 15px}.card b{display:block;color:var(--blue)}table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#f0f3f8}code{background:#f0f2f6;border-radius:4px;padding:1px 4px;color:#a31b4b}pre{background:var(--code);color:#e6edf3;padding:16px;border-radius:8px;overflow:auto;line-height:1.55}.note{border-left:4px solid var(--blue);background:#f2f6ff;padding:10px 14px;margin:14px 0}@media(max-width:800px){.layout{display:block}.side{position:relative;height:auto}.main{padding:22px 14px}.section{padding:20px 17px}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="side">
+<h1>商品搜索与排序系统</h1>
+<p>完整项目流程 · CPU 主线 · 4060 可选加速</p>
+<input id="filter" placeholder="搜索章节或任务">
+<nav id="nav">
+<a href="#overview">项目目标</a>
+<a href="#current">当前状态</a>
+<a href="#structure">最终目录</a>
+<a href="#data">数据层</a>
+<a href="#retrieval">检索层</a>
+<a href="#ranking">排序层</a>
+<a href="#evaluation">评估层</a>
+<a href="#service">服务层</a>
+<a href="#tasks">T01—T32 实施顺序</a>
+<a href="#hardware">硬件与工具</a>
+<a href="#acceptance">最终验收</a>
+<a href="#interview">面试主线</a>
+</nav>
+</aside>
+<main class="main">
+<div class="hero" id="overview"><h2>商品搜索与排序系统</h2><p>从公开 ESCI 数据开始，亲手构建数据准备、BM25、向量召回、RRF、Learning-to-Rank 和 FastAPI 服务。</p></div>
+<section class="section" id="current"><h2>当前状态</h2>
+<p>已有数据契约、字段校验、下载器、Parquet 读取、清洗、内存数据集、审计和训练验证划分。examples 与 products 已完成 SHA256 校验，PyArrow 25.0.1 已安装，真实样本读取和转换已通过。</p>
+<div class="note">当前没有完成 SQLite、索引、模型、评估、API 或最终报告。下面是一次性固定的完整路线。</div>
+<table><tr><th>数据范围</th><th>已核对规模</th></tr><tr><td>US Task 1 train</td><td>20,888 queries / 419,653 judgments</td></tr><tr><td>US Task 1 test</td><td>8,956 queries / 181,701 judgments</td></tr><tr><td>US product catalog</td><td>约 1,215,854 行</td></tr></table>
+</section>
+<section class="section" id="structure"><h2>最终目录与职责</h2>
+<pre>product-search/
+├── configs/                 配置
+├── data/raw/                原始文件
+├── data/processed/          SQLite 数据集
+├── artifacts/               索引、向量、模型
+├── reports/                 审计、评估和性能报告
+├── tests/                   定向测试
+└── src/product_search/
+    ├── schemas.py           Query/Product/Judgment/SearchResult
+    ├── validation.py        单对象字段校验
+    ├── contracts.py         跨模块接口和 Hit/Candidate
+    ├── settings.py          配置读取与范围检查
+    ├── artifacts.py         产物 manifest 和兼容性
+    ├── data/                原始数据、SQLite 和审计
+    ├── retrieval/           文本、BM25、向量和 RRF
+    ├── ranking/             特征、group、LambdaRank
+    ├── evaluation/          指标、对照、错误和性能
+    └── service/              搜索编排、API、日志和页面</pre>
+</section>
+<section class="section" id="data"><h2>数据层</h2>
+<div class="grid"><div class="card"><b>store.py</b>建 catalog.sqlite 和 labels.sqlite，事务写入、重复忽略、冲突拒绝。</div><div class="card"><b>prepare.py</b>把 raw 文件分批写入数据库，做官方划分和 dev/full 范围控制。</div><div class="card"><b>audit_store.py</b>统计查询、商品、标注、标签、外键、候选数量并输出报告。</div></div>
+<h3>准备顺序</h3><ol><li>核验 manifest。</li><li>筛选 US small_version=1。</li><li>官方 train 按查询文本组分为 train/validation，官方 test 保持 test。</li><li>写 queries、judgments 和 catalog。</li><li>执行外键、重复、标签和数量审计。</li><li>审计通过后原子发布 dataset。</li></ol>
+<p><code>catalog.sqlite</code>只保存商品目录；<code>labels.sqlite</code>保存查询、公开标注和 partition。在线服务不加载 labels.sqlite。</p>
+</section>
+<section class="section" id="retrieval"><h2>检索层：BM25、向量与 RRF</h2>
+<h3>BM25</h3><p>把商品文本建成倒排索引，根据词频、文档频率和文本长度计算分数。零命中返回空结果，同分按商品键稳定排序。</p>
+<h3>向量召回</h3><p>Sentence Transformers 将查询和商品编码为向量。第一版使用分块 NumPy 精确点积作为正确性真值，向量与商品键单独保存并做 hash 校验。精确版本通过后再接 FAISS。</p>
+<h3>RRF</h3><pre>score(product) = sum(1 / (60 + rank_in_each_retriever))</pre><p>RRF 只使用排名，不把 BM25 和 cosine 分数直接相加。相同商品合并，并保留各路来源。</p>
+</section>
+<section class="section" id="ranking"><h2>排序层：特征与 LightGBM</h2>
+<p>特征包括查询和标题 token 数、词项重合、brand/color 命中、BM25 分数、dense 相似度、RRF 分数和字段长度。特征函数不接收 Judgment，因此不能直接读取标签。</p>
+<p>训练标签为 I=0、C=1、S=2、E=3；DCG gain 单独为 0、1、3、7。每个 query 是一个 LightGBM group。训练只使用 train，validation 用于 early stopping，test 在配置冻结后评估一次。</p>
+</section>
+<section class="section" id="evaluation"><h2>评估层：两个范围不能混</h2>
+<div class="grid"><div class="card"><b>给定候选排序</b>候选来自公开 qrels，比较模型在同一候选集中的排序质量，主指标 NDCG@10 和 MRR_E@10。</div><div class="card"><b>目录检索</b>候选来自完整 US 商品目录，报告 known_E_recall@100、judged_fraction@100、空结果率和延迟。</div></div>
+<p>未被公开标注的商品是 unknown，不自动当成 I。分母为空的查询记为 undefined 并报告数量。ANN Recall 只表示近似索引相对于精确向量的重合率，不是业务相关性召回。</p>
+</section>
+<section class="section" id="service"><h2>服务层</h2>
+<p>SearchEngine 执行输入校验、BM25/dense 召回、RRF、特征、ranker 重排和 SearchResult 输出。ranker 缺失时可以降级到 RRF，但响应必须写明 pipeline。</p>
+<p>FastAPI 提供 <code>/health</code>、<code>/version</code>、<code>/search</code>。使用 lifespan 启动时加载共享模型和索引；响应返回 release_id、pipeline、request_id 和阶段耗时。错误响应不泄漏路径、堆栈、标签和密钥。</p>
+</section>
+<section class="section" id="tasks"><h2>T01—T32 实施顺序</h2>
+<table><tr><th>阶段</th><th>任务</th><th>结果</th></tr><tr><td>1 数据</td><td>T01—T07</td><td>配置、契约、SQLite、全量审计、CLI</td></tr><tr><td>2 关键词</td><td>T08—T12</td><td>文本、BM25、指标和基线</td></tr><tr><td>3 向量</td><td>T13—T17</td><td>编码、精确搜索、RRF、可选 FAISS</td></tr><tr><td>4 排序</td><td>T18—T22</td><td>特征、group、LambdaRank、对照</td></tr><tr><td>5 交付</td><td>T23—T32</td><td>错误分析、性能、API、前端、文档、release</td></tr></table>
+<p>每项由你实现一个完整文件或紧密文件组；路线、接口、验收和依赖关系已经固定。</p>
+</section>
+<section class="section" id="hardware"><h2>硬件与工具</h2>
+<table><tr><th>工具</th><th>用途</th></tr><tr><td>Python + PyArrow</td><td>数据读取</td></tr><tr><td>SQLite</td><td>商品和标注存储</td></tr><tr><td>Sentence Transformers</td><td>向量编码</td></tr><tr><td>LightGBM</td><td>CPU Learning-to-Rank</td></tr><tr><td>FastAPI</td><td>本地服务</td></tr><tr><td>FAISS</td><td>可选 ANN 加速</td></tr><tr><td>Dify</td><td>外围演示，不进入主链路</td></tr></table>
+<p>主线无需 GPU。4060 适合后续 embedding 加速；无 GPU 云服务器可以运行 API 或 Dify，但不是完成项目的必要条件。Spark、Hive、Kafka、Milvus 暂不加入。</p>
+</section>
+<section class="section" id="acceptance"><h2>最终验收</h2>
+<ul><li>数据版本、SHA256、SQLite 审计和查询划分可追溯。</li><li>BM25、dense、RRF、LTR 使用统一范围完成对照。</li><li>报告包含 NDCG、MRR、known recall、延迟和至少三组消融。</li><li>validation 至少完成 30 个完整查询的错误分析。</li><li>特征、索引、模型和 release 兼容性不匹配时会拒绝加载。</li><li>API 可以返回 health、version、search，重启后结果稳定。</li><li>README 可以让新人按命令启动 dev 流程。</li><li>简历只写 reports 中真实存在的数字。</li></ul>
+</section>
+<section class="section" id="interview"><h2>面试主线</h2>
+<ul><li>为什么召回漏掉的商品无法由排序找回来？</li><li>为什么 BM25 与 cosine 不能直接相加？为什么 RRF 可以先做融合？</li><li>为什么按 query 分组，而不是按 query-product 行随机切分？</li><li>为什么 unknown 不能直接当 I？</li><li>为什么 label 和 gain 分开？</li><li>向量 ID 错位如何通过 metadata 发现？</li><li>线上延迟如何拆成编码、召回、融合、排序分别定位？</li><li>为什么在线服务不能加载 labels.sqlite？</li><li>没有 GPU 时为什么主线仍然可以完成？</li></ul>
+</section>
+</main>
+</div>
+<script>
+const filter=document.getElementById("filter");const links=[...document.querySelectorAll("#nav a")];const sections=[...document.querySelectorAll(".section,.hero")];
+filter.addEventListener("input",()=>{const q=filter.value.trim().toLowerCase();links.forEach(a=>{const target=document.querySelector(a.getAttribute("href"));a.style.display=!q||target.innerText.toLowerCase().includes(q)||a.innerText.toLowerCase().includes(q)?"block":"none"})});
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+e.target.id))}}),{rootMargin:"-20% 0px -65% 0px"});sections.forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Keep source text consistent across platforms.
+* text=auto eol=lf
+*.cmd text eol=crlf
+# Release manifests contain SHA256 checksums: preserve every artifact byte.
+artifacts/** -text
+data/** -text
+reports/** -text

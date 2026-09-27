@@ -1,0 +1,22 @@
+{
+  "format": "exact-vectors-v1",
+  "shape": [
+    11934,
+    384
+  ],
+  "dtype": "float32",
+  "signature": {
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "max_seq_length": 128,
+    "normalize_embeddings": true,
+    "dimension": 384,
+    "text_version": "title-brand-bullet-v1",
+    "max_tokens": 128,
+    "tokenizer_version": "casefold-before-filter-v2"
+  },
+  "files": {
+    "embeddings.npy": "30d1c74cf066f67f5354cc41cc583ba21a7c658cd70a3dacb5f91a63ec2aa232",
+    "embedding_ids.jsonl": "274c5641fdc705c1fca8ed235adea2fd5f7931c39191dd7198199fb42cd45dcb"
+  }
+}

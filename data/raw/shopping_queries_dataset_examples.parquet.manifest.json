@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/amazon-science/esci-data",
+  "revision": "7916cdf6ab75a462e77f20ab40428a10923998d5",
+  "source_url": "https://media.githubusercontent.com/media/amazon-science/esci-data/7916cdf6ab75a462e77f20ab40428a10923998d5/shopping_queries_dataset/shopping_queries_dataset_examples.parquet",
+  "resolved_url": "https://media.githubusercontent.com/media/amazon-science/esci-data/7916cdf6ab75a462e77f20ab40428a10923998d5/shopping_queries_dataset/shopping_queries_dataset_examples.parquet",
+  "filename": "shopping_queries_dataset_examples.parquet",
+  "size_bytes": 51286808,
+  "sha256": "4a735b693b4a424a6fc67f5be6e4c811495c488bbf66d02a602d308b2744263a",
+  "downloaded_at_utc": "2026-09-24T09:07:19.903548+00:00"
+}

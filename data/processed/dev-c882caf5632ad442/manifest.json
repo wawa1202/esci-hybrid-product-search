@@ -1,0 +1,125 @@
+{
+  "dataset_id": "dev-c882caf5632ad442",
+  "status": "prepared",
+  "created_at_utc": "2026-09-25T11:36:15.428764+00:00",
+  "identity": {
+    "prepare_version": "prepare-v1",
+    "sources": {
+      "examples": {
+        "repository": "https://github.com/amazon-science/esci-data",
+        "revision": "7916cdf6ab75a462e77f20ab40428a10923998d5",
+        "filename": "shopping_queries_dataset_examples.parquet",
+        "size_bytes": 51286808,
+        "sha256": "4a735b693b4a424a6fc67f5be6e4c811495c488bbf66d02a602d308b2744263a"
+      },
+      "products": {
+        "repository": "https://github.com/amazon-science/esci-data",
+        "revision": "7916cdf6ab75a462e77f20ab40428a10923998d5",
+        "filename": "shopping_queries_dataset_products.parquet",
+        "size_bytes": 1108857465,
+        "sha256": "25124442d064d64b26f74082d6fa09438d679efc0c183cf28d19064a2b65a265"
+      }
+    },
+    "project": {
+      "profile": "dev",
+      "locale": "us",
+      "seed": 42
+    },
+    "selection": {
+      "validation_fraction": 0.2,
+      "sample_groups_per_partition": 200,
+      "catalog_scope": "sampled_judged_union"
+    }
+  },
+  "settings_snapshot": {
+    "project_root": ".",
+    "config_path": ".\\configs\\dev.toml",
+    "project": {
+      "profile": "dev",
+      "locale": "us",
+      "seed": 42
+    },
+    "data": {
+      "raw_dir": "data/raw",
+      "processed_dir": "data/processed",
+      "reports_dir": "reports",
+      "artifacts_dir": "artifacts",
+      "validation_fraction": 0.2,
+      "sample_groups_per_partition": 200,
+      "catalog_scope": "sampled_judged_union"
+    },
+    "text": {
+      "version": "title-brand-bullet-v1",
+      "max_tokens": 128
+    },
+    "bm25": {
+      "k1": 1.2,
+      "b": 0.75,
+      "top_k": 100
+    },
+    "embedding": {
+      "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+      "revision": "TO_BE_FILLED_AFTER_MODEL_CHECK",
+      "device": "cpu",
+      "batch_size": 16,
+      "max_seq_length": 128,
+      "normalize_embeddings": true
+    },
+    "retrieval": {
+      "vector_block_size": 8192,
+      "dense_top_k": 100,
+      "rrf_constant": 60,
+      "rerank_top_k": 100
+    },
+    "training": {
+      "objective": "lambdarank",
+      "num_threads": 4,
+      "num_leaves": 31,
+      "learning_rate": 0.05,
+      "n_estimators": 500,
+      "early_stopping_rounds": 30,
+      "label_gain": [
+        0,
+        1,
+        3,
+        7
+      ]
+    },
+    "evaluation": {
+      "ranking_k": 10,
+      "retrieval_k": 100,
+      "bootstrap_iterations": 1000
+    },
+    "service": {
+      "host": "127.0.0.1",
+      "port": 8000,
+      "max_query_chars": 256,
+      "max_top_k": 50,
+      "max_concurrent_searches": 2
+    }
+  },
+  "basic_integrity": {
+    "status": "passed",
+    "queries_by_partition": {
+      "test": 200,
+      "train": 200,
+      "validation": 200
+    },
+    "products": 11934,
+    "judgments": 12036
+  },
+  "files": {
+    "catalog.sqlite": {
+      "size_bytes": 19668992,
+      "sha256": "816aaa54a365b18e1791f083ad188eccfb0c9dcf32b505eb404653ee7750658d"
+    },
+    "labels.sqlite": {
+      "size_bytes": 843776,
+      "sha256": "b96ff68c00df9d478c9c90256f5c8b7636a9a2e468feba27dd0f287559a2e4b1"
+    },
+    "rejects.jsonl": {
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

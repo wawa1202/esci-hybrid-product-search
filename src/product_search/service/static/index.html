@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>商品搜索实验台</title><style>
+:root{font-family:system-ui,"Microsoft YaHei",sans-serif;color:#163044;background:#f3f6f8}body{max-width:980px;margin:50px auto;padding:0 24px}h1{font-size:32px;margin-bottom:8px}.muted{color:#536f80;line-height:1.8}form{display:flex;gap:12px;margin:28px 0}input,select,button{font:inherit;padding:13px;border:1px solid #c2d1da;border-radius:8px}input{flex:1;min-width:80px}button{background:#17665a;color:white;cursor:pointer}button:disabled{opacity:.5}article{background:white;border:1px solid #d7e1e8;border-radius:10px;padding:20px;margin:12px 0}article h2{font-size:17px;margin:0 0 12px}.tag{font-size:13px;color:#17665a}#status{white-space:pre-wrap;line-height:1.6}footer{font-size:13px;margin:30px 0}@media(max-width:600px){form{flex-wrap:wrap}input{flex-basis:100%}}
+</style></head><body>
+<p class="tag">ESCI · 公开数据 · US 市场</p><h1>商品搜索实验台</h1>
+<p class="muted">输入英文商品需求，观察关键词召回、向量召回和排序的结果。分数用于排序，并非购买概率。</p>
+<form id="form"><input id="query" aria-label="商品查询" maxlength="256" required placeholder="例如 wireless headphones" value="running shoes"><select id="top" aria-label="结果数量"><option>5</option><option selected>10</option><option>20</option></select><button id="button">搜索</button></form>
+<div id="status" role="status"></div><main id="results"></main><footer class="muted" id="version"></footer>
+<script>
+const $=id=>document.getElementById(id);
+fetch('/version').then(r=>r.json()).then(v=>{$('version').textContent=`发布版本：${v.release_id} · 数据：${v.dataset_id} · 商品库：${v.catalog_scope||'unknown'}`}).catch(()=>{});
+$('form').addEventListener('submit',async event=>{event.preventDefault();$('button').disabled=true;$('status').textContent='正在搜索…';$('results').replaceChildren();try{
+const response=await fetch('/search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query:$('query').value,locale:'us',top_k:Number($('top').value)})});const data=await response.json();if(!response.ok)throw Error(response.status===503?'服务繁忙，请稍后重试':response.status===422?'请检查输入内容':'搜索失败，请检查服务日志');
+$('status').textContent=`${data.pipeline==='hybrid_ltr'?'混合召回 + 学习排序':'RRF 融合（未加载排序模型）'} · ${data.results.length} 条结果 · ${data.timings_ms.total} ms\n${Object.entries(data.timings_ms).filter(([k])=>k!=='total').map(([k,v])=>`${k}: ${v} ms`).join('  |  ')}`;
+for(const item of data.results){const card=document.createElement('article'),title=document.createElement('h2'),meta=document.createElement('div');title.textContent=`${item.rank}. ${item.title}`;meta.className='muted';meta.textContent=`${item.brand||'未提供品牌'} · 商品 ${item.product_id} · 分数 ${item.score.toFixed(4)} · 命中 ${item.sources.map(x=>`${x.source} #${x.rank}`).join(' / ')}`;card.append(title,meta);$('results').append(card)}if(!data.results.length)$('status').textContent+='\n没有匹配结果';
+}catch(error){$('status').textContent=error.message}finally{$('button').disabled=false}});
+</script></body></html>

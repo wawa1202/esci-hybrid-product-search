@@ -1,0 +1,89 @@
+{
+  "audit_version": "audit-v1",
+  "dataset_id": "dev-c882caf5632ad442",
+  "dataset_dir": ".\\data\\processed\\dev-c882caf5632ad442",
+  "status": "passed",
+  "audited_at_utc": "2026-09-26T05:24:41.106378+00:00",
+  "catalog_scope": "sampled_judged_union",
+  "products": 11934,
+  "products_with_any_judgment": 11934,
+  "products_without_any_judgment": 0,
+  "partitions": {
+    "train": {
+      "queries": 200,
+      "query_groups": 200,
+      "judgments": 3886,
+      "label_counts": {
+        "E": 1781,
+        "S": 1360,
+        "C": 150,
+        "I": 595
+      },
+      "label_ratios": {
+        "E": 0.45831188883170354,
+        "S": 0.34997426659804426,
+        "C": 0.03860010293360782,
+        "I": 0.15311374163664437
+      },
+      "judged_candidates_per_query": {
+        "min": 8,
+        "max": 45,
+        "mean": 19.43,
+        "median": 16.0
+      },
+      "queries_without_exact": 0
+    },
+    "validation": {
+      "queries": 200,
+      "query_groups": 200,
+      "judgments": 3983,
+      "label_counts": {
+        "E": 1668,
+        "S": 1382,
+        "C": 134,
+        "I": 799
+      },
+      "label_ratios": {
+        "E": 0.4187798142103942,
+        "S": 0.34697464222947527,
+        "C": 0.03364298267637459,
+        "I": 0.20060256088375597
+      },
+      "judged_candidates_per_query": {
+        "min": 8,
+        "max": 44,
+        "mean": 19.915,
+        "median": 16.0
+      },
+      "queries_without_exact": 0
+    },
+    "test": {
+      "queries": 200,
+      "query_groups": 200,
+      "judgments": 4167,
+      "label_counts": {
+        "E": 1913,
+        "S": 1409,
+        "C": 208,
+        "I": 637
+      },
+      "label_ratios": {
+        "E": 0.4590832733381329,
+        "S": 0.33813294936405086,
+        "C": 0.04991600671946244,
+        "I": 0.15286777057835374
+      },
+      "judged_candidates_per_query": {
+        "min": 11,
+        "max": 72,
+        "mean": 20.835,
+        "median": 16.0
+      },
+      "queries_without_exact": 0
+    }
+  },
+  "notes": [
+    "未标注的查询—商品对不是已知负例。",
+    "当前是样本商品目录；其结果不能代表全目录检索效果。"
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "release_id": "ecf6c9949544e897d2e7c35f1611fc680d8b1a8ca7385e1b14338a79f4b529ad",
+  "dataset_id": "dev-c882caf5632ad442",
+  "partition": "validation",
+  "queries": 200,
+  "catalog_scope": "sampled_judged_union",
+  "ranking_k": 10,
+  "retrieval_k": 100,
+  "ranking": {
+    "bm25": {
+      "mrr_e": {
+        "mean": 0.7388928571428571,
+        "defined": 200,
+        "undefined": 0
+      },
+      "ndcg": {
+        "mean": 0.7681799065545872,
+        "defined": 200,
+        "undefined": 0
+      }
+    },
+    "dense": {
+      "mrr_e": {
+        "mean": 0.7798174603174604,
+        "defined": 200,
+        "undefined": 0
+      },
+      "ndcg": {
+        "mean": 0.7829290287672319,
+        "defined": 200,
+        "undefined": 0
+      }
+    },
+    "rrf": {
+      "mrr_e": {
+        "mean": 0.7540813492063492,
+        "defined": 200,
+        "undefined": 0
+      },
+      "ndcg": {
+        "mean": 0.7777003787028753,
+        "defined": 200,
+        "undefined": 0
+      }
+    },
+    "ltr": {
+      "mrr_e": {
+        "mean": 0.7406031746031746,
+        "defined": 200,
+        "undefined": 0
+      },
+      "ndcg": {
+        "mean": 0.7734889658974692,
+        "defined": 200,
+        "undefined": 0
+      }
+    }
+  },
+  "retrieval": {
+    "bm25": {
+      "judged_fraction": {
+        "mean": 0.18371844758953979,
+        "defined": 198,
+        "undefined": 2
+      },
+      "known_e_recall": {
+        "mean": 0.8046971500462204,
+        "defined": 200,
+        "undefined": 0
+      },
+      "known_es_recall": {
+        "mean": 0.7639127544290095,
+        "defined": 200,
+        "undefined": 0
+      }
+    },
+    "dense": {
+      "judged_fraction": {
+        "mean": 0.16040000000000001,
+        "defined": 200,
+        "undefined": 0
+      },
+      "known_e_recall": {
+        "mean": 0.8635791256268945,
+        "defined": 200,
+        "undefined": 0
+      },
+      "known_es_recall": {
+        "mean": 0.833928685239734,
+        "defined": 200,
+        "undefined": 0
+      }
+    },
+    "rrf": {
+      "judged_fraction": {
+        "mean": 0.1653,
+        "defined": 200,
+        "undefined": 0
+      },
+      "known_e_recall": {
+        "mean": 0.874960593595319,
+        "defined": 200,
+        "undefined": 0
+      },
+      "known_es_recall": {
+        "mean": 0.8544643119863709,
+        "defined": 200,
+        "undefined": 0
+      }
+    }
+  },
+  "comparisons": {
+    "dense_minus_bm25": {
+      "mean_delta": 0.01474912221264476,
+      "ci95": [
+        -0.0060861963117943675,
+        0.035860603048311915
+      ],
+      "wins": 96,
+      "losses": 95,
+      "ties": 9,
+      "n": 200,
+      "excluded": 0
+    },
+    "rrf_minus_bm25": {
+      "mean_delta": 0.009520472148288118,
+      "ci95": [
+        4.662629954510893e-06,
+        0.019111331349461635
+      ],
+      "wins": 103,
+      "losses": 81,
+      "ties": 16,
+      "n": 200,
+      "excluded": 0
+    },
+    "ltr_minus_bm25": {
+      "mean_delta": 0.005309059342882041,
+      "ci95": [
+        -0.014123944834007298,
+        0.02369469944898208
+      ],
+      "wins": 92,
+      "losses": 100,
+      "ties": 8,
+      "n": 200,
+      "excluded": 0
+    }
+  },
+  "limitations": [
+    "人工候选集排序指标不能代表全商品库端到端效果",
+    "未标注商品是未知，不是 I；known recall 只对已知相关标签计算",
+    "dev 是人工候选商品并集，不能宣称完整 Amazon 商品库效果"
+  ]
+}
